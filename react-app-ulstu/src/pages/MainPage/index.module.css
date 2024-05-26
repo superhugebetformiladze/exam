@@ -1,0 +1,35 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    width: 100%;
+    margin: 2rem 0 2rem 0;
+}
+.image {
+    width: 55%;
+    background-image: url('/public/podrobnayaInformatsiaOPrieme.webp');
+    background-size: cover;
+    border-radius: 30px;
+}
+.loginFormWrapper {
+    width: 45%;
+    color: rgb(29, 28, 34);
+    font-size: 1.2rem;
+    background-color: rgb(235, 235, 235);
+    border-radius: 30px;
+    padding: 2rem;
+    font-weight: 500;
+
+}
+
+@media (width < 1000px) {
+    .main {
+        flex-direction: column;
+    }
+    .image {
+        display: none;
+    }
+    .loginFormWrapper {
+        width: 100%;
+    }
+}
