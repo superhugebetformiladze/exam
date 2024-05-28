@@ -1,22 +1,24 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState, useCallback } from "react";
+import { TimeTableData } from "../types/types";
 
-const useFetchTimeTable = () => {
-    const [timeTableData, setTimeTableData] = useState([])
+const useFetchTimeTableGroup = (group: string): TimeTableData => {
+    const [timeTableData, setTimeTableData] = useState<TimeTableData>([])
+
+    const fetchData = useCallback(async () => {
+        try {
+            const response = await fetch(`https://vm.nathoro.ru/timetable/by-group/${group}`);
+            const data: TimeTableData = await response.json();
+            setTimeTableData(data);
+        } catch (error) {
+            console.error("Error:", error)
+        }
+    }, [group])
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`https://vm.nathoro.ru/timetable/groups`);
-                const data = await response.json();
-                setTimeTableData(data);
-            } catch (error) {
-                console.error("Error:", error)
-            }
-        }
-        fetchData()
+        fetchData();
     }, [])
 
     return timeTableData;
 };
 
-export default useFetchTimeTable;
+export default useFetchTimeTableGroup;

@@ -4,7 +4,7 @@ import "./index.css"
 
 const Footer = () => {
     return (
-        <div className="footer">
+        <div className="footer" style={{}}>
             
             Автор красавчик
         </div>

@@ -6,24 +6,32 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 const MainPage = () => {
-    const [group, setGroup] = useState<string>("");
-    const [searchGroup, setSearchGroup] = useState<string>(group);
-    const timeTableData = useFetchTimeTableGroup(searchGroup);
+    const [input, setInput] = useState<string>("");
+    const [searchInput, setSearchInput] = useState<string>(input);
+    const [tableData, setTableData] = useState<string>("")
+    const timeTableData = useFetchTimeTableGroup(searchInput || tableData);
+
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setGroup(event.target.value);
+        setInput(event.target.value);
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setSearchGroup(group);
+        setSearchInput(input);
     };
 
     const handleClear = () => {
-        setGroup("");
-        setSearchGroup("");
-        window.location.reload();
+        setInput("");
+        setSearchInput("");
+        setTableData("");
     };
+
+    const handleTableClick = (data: string) => {
+        setTableData(data);
+        setInput(data);
+        setSearchInput(data);
+    }
 
     return (
         <Container>
@@ -32,7 +40,7 @@ const MainPage = () => {
                     <Form.Control 
                         type="text" 
                         placeholder="Поиск по группе" 
-                        value={group} 
+                        value={input} 
                         onChange={handleInputChange} 
                     />
                 </Form.Group>
@@ -44,8 +52,8 @@ const MainPage = () => {
                 </Button>
             </Form>
 
-            {timeTableData.map((data, index) => (
-                <TableComponent key={index} data={data} weekIndex={index}></TableComponent>
+            {(searchInput || tableData) && timeTableData.length > 0 && timeTableData.map((data, index) => (
+                <TableComponent key={index} data={data} weekIndex={index} onTableClick={handleTableClick}></TableComponent>
             ))}
         </Container>
     )

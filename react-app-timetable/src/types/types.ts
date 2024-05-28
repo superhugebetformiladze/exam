@@ -17,9 +17,9 @@ export interface Subject {
 }
 
 export interface Lesson {
-    group?: Group;
-    room?: Room;
-    subject?: Subject;
+    group: Group;
+    room: Room;
+    subject: Subject;
 }
 
 export interface Day {
